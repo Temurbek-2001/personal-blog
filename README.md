@@ -125,7 +125,7 @@ Comprehensive test coverage for:
 ## 👥 Contributors
 
 - **Temurbek Mirzaliev**
-  - Student ID: `[Your Student ID]`
+  - Student ID: `39293`
   - Role: Lead Developer
 
 ## 🔗 Project Links
