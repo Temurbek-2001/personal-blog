@@ -30,8 +30,20 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'admin_id',
-            'category_id',
+            [
+                'attribute' => 'user_id',
+                'value' => function ($model) {
+                    return $model->user->username ?? '(System)';
+                },
+                'label' => 'Author',
+            ],
+            [
+                'attribute' => 'category_id',
+                'value' => function ($model) {
+                    return $model->category->name ?? '(No Category)';
+                },
+                'label' => 'Category',
+            ],
             'title',
             'content:ntext',
             'created_at',

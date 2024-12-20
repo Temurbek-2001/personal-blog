@@ -28,16 +28,26 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'admin_id',
-            'category_id',
             'title',
             'content:ntext',
+            [
+                'attribute' => 'user_id',
+                'value' => function ($model) {
+                    return $model->user->username ?? '(System)';
+                },
+                'label' => 'Author',
+            ],
             //'created_at',
             //'updated_at',
             [
-                'class' => ActionColumn::className(),
+                'attribute' => 'category_id',
+                'value' => function ($model) {
+                    return $model->category->name ?? '(No Category)';
+                },
+                'label' => 'Category',
+            ],
+            [
+                'class' => ActionColumn::class,
                 'urlCreator' => function ($action, Posts $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }

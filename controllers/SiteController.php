@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\User;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -63,6 +64,32 @@ class SiteController extends Controller
     {
         return $this->render('index');
     }
+
+
+
+    public function actionSignup()
+    {
+        $model = new User();
+
+        if (Yii::$app->request->isPost) {
+            $postData = Yii::$app->request->post();
+            $model->password = $postData['User']['password'];
+            if ($model->signup($postData)) {
+                Yii::$app->session->setFlash('success', 'Signup successful! You can now login.');
+                return $this->redirect(['login']);
+            } else {
+                Yii::$app->session->setFlash('error', 'Signup failed. Please try again.');
+            }
+        }
+
+        return $this->render('signup', [
+            'model' => $model,
+        ]);
+    }
+
+
+
+
 
     /**
      * Login action.
