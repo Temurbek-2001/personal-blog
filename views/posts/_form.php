@@ -6,24 +6,29 @@ use yii\widgets\ActiveForm;
 /** @var yii\web\View $this */
 /** @var app\models\Posts $model */
 /** @var yii\widgets\ActiveForm $form */
+/** @var array $categoryList */
+
 ?>
 
 <div class="posts-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'admin_id')->textInput() ?>
+    <!-- Dropdown for Category -->
+    <?= $form->field($model, 'category_id')
+        ->label('Category')
+        ->dropDownList(
+            $categoryList,
+            ['prompt' => ' -- Select Category --']
+        ) ?>
 
-    <?= $form->field($model, 'category_id')->textInput() ?>
-
+    <!-- Text input for Title -->
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
+    <!-- Textarea for Content -->
     <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'created_at')->textInput() ?>
-
-    <?= $form->field($model, 'updated_at')->textInput() ?>
-
+    <!-- Submit Button -->
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>

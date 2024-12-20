@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Categories;
 use app\models\Posts;
 use app\models\PostsSearch;
 use yii\web\Controller;
@@ -68,6 +69,12 @@ class PostsController extends Controller
     public function actionCreate()
     {
         $model = new Posts();
+        $model->user_id = \Yii::$app->user->id;
+        // Fetch categories
+        $categoryList = Categories::find()
+            ->select(['name'])
+            ->indexBy('id') // Creates [id => name]
+            ->column();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -79,6 +86,7 @@ class PostsController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'categoryList' => $categoryList, // Pass category list
         ]);
     }
 

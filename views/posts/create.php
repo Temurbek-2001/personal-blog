@@ -4,6 +4,7 @@ use yii\helpers\Html;
 
 /** @var yii\web\View $this */
 /** @var app\models\Posts $model */
+/** @var array $categoryList */
 
 $this->title = 'Create Posts';
 $this->params['breadcrumbs'][] = ['label' => 'Posts', 'url' => ['index']];
@@ -15,6 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render('_form', [
         'model' => $model,
+        'categoryList' => $categoryList,
     ]) ?>
 
 </div>

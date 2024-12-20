@@ -8,16 +8,16 @@ use Yii;
  * This is the model class for table "posts".
  *
  * @property int $id
- * @property int $admin_id
+ * @property int $user_id
  * @property int $category_id
  * @property string $title
  * @property string $content
  * @property string|null $created_at
  * @property string|null $updated_at
  *
- * @property Admins $admin
+ * @property User $user
  * @property Categories $category
- * @property PostImages[] $postImages
+ * @property Images[] $postImages
  */
 class Posts extends \yii\db\ActiveRecord
 {
@@ -35,12 +35,12 @@ class Posts extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['admin_id', 'category_id', 'title', 'content'], 'required'],
-            [['admin_id', 'category_id'], 'integer'],
+            [['user_id', 'category_id', 'title', 'content'], 'required'],
+            [['user_id', 'category_id'], 'integer'],
             [['content'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
             [['title'], 'string', 'max' => 255],
-            [['admin_id'], 'exist', 'skipOnError' => true, 'targetClass' => Admins::class, 'targetAttribute' => ['admin_id' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],  // Changed admin_id to user_id
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Categories::class, 'targetAttribute' => ['category_id' => 'id']],
         ];
     }
@@ -52,8 +52,8 @@ class Posts extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'admin_id' => 'Admin ID',
-            'category_id' => 'Category ID',
+            'user_id' => 'Author',  // Updated user_id to represent the user field
+            'category_id' => 'Category',
             'title' => 'Title',
             'content' => 'Content',
             'created_at' => 'Created At',
@@ -62,13 +62,13 @@ class Posts extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Admin]].
+     * Gets query for [[User]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getAdmin()
+    public function getUser()  // Updated getAdmin to getUser
     {
-        return $this->hasOne(Admins::class, ['id' => 'admin_id']);
+        return $this->hasOne(User::class, ['id' => 'user_id']);  // Updated user_id referencing Users table
     }
 
     /**
@@ -88,6 +88,6 @@ class Posts extends \yii\db\ActiveRecord
      */
     public function getPostImages()
     {
-        return $this->hasMany(PostImages::class, ['post_id' => 'id']);
+        return $this->hasMany(Images::class, ['post_id' => 'id']);
     }
 }
