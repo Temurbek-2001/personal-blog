@@ -28,8 +28,8 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
+            'title',
+            'content:ntext',
             [
                 'attribute' => 'user_id',
                 'value' => function ($model) {
@@ -37,6 +37,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
                 'label' => 'Author',
             ],
+            //'created_at',
+            //'updated_at',
             [
                 'attribute' => 'category_id',
                 'value' => function ($model) {
@@ -44,10 +46,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
                 'label' => 'Category',
             ],
-            'title',
-            'content:ntext',
-            //'created_at',
-            //'updated_at',
             [
                 'class' => ActionColumn::class,
                 'urlCreator' => function ($action, Posts $model, $key, $index, $column) {
