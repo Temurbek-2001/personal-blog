@@ -5,6 +5,8 @@ namespace app\controllers;
 use app\models\Categories;
 use app\models\Posts;
 use app\models\PostsSearch;
+use Yii;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -22,10 +24,37 @@ class PostsController extends Controller
         return array_merge(
             parent::behaviors(),
             [
+                // Access Control Behavior
+                'access' => [
+                    'class' => AccessControl::class,
+                    'rules' => [
+                        [
+                            'allow' => true,
+                            'actions' => ['view'],
+                            'roles' => ['?'], // Guests can only view posts
+                        ],
+                        [
+                            'allow' => true,
+                            'actions' => ['create', 'update', 'delete', 'view', 'index'],
+                            'roles' => ['@'], // Only authenticated users can perform CRUD actions
+                        ],
+                        [
+                            'allow' => true,
+                            'actions' => ['update', 'delete'],
+                            'roles' => ['@'],
+                            'matchCallback' => function ($rule, $action) {
+                                $postId = Yii::$app->request->get('id');
+                                $post = Posts::findOne($postId);
+                                return $post && $post->user_id == Yii::$app->user->id; // User can only edit their own posts
+                            },
+                        ],
+                    ],
+                ],
+                // Verb Filter Behavior
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
-                        'delete' => ['POST'],
+                        'delete' => ['POST'], // Ensure only POST method for delete action
                     ],
                 ],
             ]
@@ -42,11 +71,15 @@ class PostsController extends Controller
         $searchModel = new PostsSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
+        // Filter posts to only include those belonging to the currently logged-in user
+        $dataProvider->query->andWhere(['user_id' => Yii::$app->user->id]);
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
+
 
     /**
      * Displays a single Posts model.
