@@ -43,7 +43,7 @@ class User extends ActiveRecord implements IdentityInterface
             [['username'], 'string', 'max' => 50],
             [['email'], 'email'],
             [['password'], 'string', 'min' => 6], // Minimum password length
-            [['username'], 'unique'], // Ensure username is unique
+            [['username', 'email'], 'unique'], // Ensure username is unique
         ];
 
 
