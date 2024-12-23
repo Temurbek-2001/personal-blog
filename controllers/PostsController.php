@@ -100,6 +100,10 @@ class PostsController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $categoryList = Categories::find()
+            ->select(['name'])
+            ->indexBy('id') // Creates [id => name]
+            ->column();
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -107,6 +111,7 @@ class PostsController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+            'categoryList' => $categoryList,
         ]);
     }
 
