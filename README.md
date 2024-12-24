@@ -28,7 +28,7 @@ A sophisticated personal blog website developed using the Yii Framework, showcas
 | Category | Technologies |
 |----------|--------------|
 | Backend | Yii Framework (PHP) |
-| Frontend | HTML5, CSS3, JavaScript |
+| Frontend | HTML, CSS, JavaScript |
 | Database | MySQL |
 | Version Control | Git (GitHub) |
 | Diagramming | draw.io |
@@ -45,7 +45,7 @@ Before you begin, ensure you have the following installed:
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/yourusername/personal-blog-website.git
+git clone https://github.com/Temurbek-2001/personal-blog-website.git
 cd personal-blog-website
 ```
 
