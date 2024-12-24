@@ -8,7 +8,7 @@ use yii\web\User;
 /** @var app\models\Posts $model */
 /** @var User $user */
 
-$this->title = $model->title;
+$this->title = Html::encode($model->title);
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -17,16 +17,18 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1 class="post-title"><?= Html::encode($this->title) ?></h1>
 
     <div class="post-meta">
-        <p><strong>Category:</strong> <?= $model->category->name ?? '(No Category)' ?></p>
+        <p><strong>Category:</strong> <?= Html::encode($model->category->name ?? '(No Category)') ?></p>
     </div>
 
     <div class="post-content">
-        <p><?= nl2br(Html::encode($model->content)) ?></p>
-        <p >
-            <span class="author-info"><strong>Author:</strong> <?= $model->user->username ?? '(System)' ?></span>
+        <!-- Render the RTE content safely by using the 'raw' filter -->
+        <p><?= Yii::$app->formatter->asHtml($model->content) ?></p>
+        <p>
+            <span class="author-info"><strong>Author:</strong> <?= Html::encode($model->user->username ?? '(System)') ?></span>
             <span class="publish-date"><strong>Published on:</strong> <?= Yii::$app->formatter->asDatetime($model->created_at) ?></span>
         </p>
     </div>
+
 
     <?php if (Yii::$app->user->isGuest == false && $model->user_id == Yii::$app->user->id): ?>
         <div class="post-actions">

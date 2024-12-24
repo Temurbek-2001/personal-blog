@@ -41,15 +41,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'content',
                 'format' => 'raw',
                 'value' => function ($model) {
-                    return mb_strlen($model->content, 'UTF-8') > 180
-                        ? mb_substr($model->content, 0, 180, 'UTF-8') . '...'
-                        : $model->content;
+                    $cleanContent = strip_tags($model->content);
+                    return mb_strlen($cleanContent, 'UTF-8') > 180
+                        ? mb_substr($cleanContent, 0, 180, 'UTF-8') . '...'
+                        : $cleanContent;  // Return the cleaned content
                 },
             ],
 
 
-            //'created_at',
-            //'updated_at',
             [
                 'attribute' => 'categoryName',
                 'value' => function ($model) {

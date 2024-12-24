@@ -72,7 +72,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h2>🚀 Installation & Setup</h2>
     <p>To set up the project on your local machine, follow these steps:</p>
     <ol>
-        <li>Clone the repository: <code>git clone https://github.com/yourusername/personal-blog-website.git</code></li>
+        <li>Clone the repository: <code>git clone https://github.com/Temurbek-2001/personal-blog-website.git</code></li>
         <li>Install dependencies: <code>composer install</code></li>
         <li>Set up the database:
             <ul>
