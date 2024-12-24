@@ -10,6 +10,9 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\Html;
+use HTMLPurifier;
+use HTMLPurifier_Config;
 
 /**
  * PostsController implements the CRUD actions for Posts model.
@@ -110,8 +113,13 @@ class PostsController extends Controller
             ->column();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load($this->request->post())) {
+                // Sanitize content before saving
+                $model->content = $this->sanitizeContent($model->content);
+
+                if ($model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
             }
         } else {
             $model->loadDefaultValues();
@@ -138,8 +146,13 @@ class PostsController extends Controller
             ->indexBy('id') // Creates [id => name]
             ->column();
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            // Sanitize content before saving
+            $model->content = $this->sanitizeContent($model->content);
+
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('update', [
@@ -176,5 +189,18 @@ class PostsController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    /**
+     * Helper method to sanitize content (prevent XSS)
+     * @param string $content
+     * @return string
+     */
+    protected function sanitizeContent($content)
+    {
+        // Using HTMLPurifier for advanced sanitization
+        $config = HTMLPurifier_Config::createDefault();
+        $purifier = new HTMLPurifier($config);
+        return $purifier->purify($content); // Ensure the content is safe
     }
 }

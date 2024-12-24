@@ -22,9 +22,27 @@ $this->title = 'Personal Blog';
                         <div class="card h-100">
                             <div class="card-body">
                                 <h5 class="card-title"><?= htmlspecialchars($post->title) ?></h5>
+
                                 <p class="card-text post-content">
-                                    <?= htmlspecialchars(substr($post->content, 0, 150)) ?>...
+                                    <?php
+                                    // Remove all HTML tags, but keep the text inside <td> tags
+                                    $cleanedContent = preg_replace_callback('/<td.*?>(.*?)<\/td>/is', function($matches) {
+                                        return strip_tags($matches[1]); // Keep text within <td> tags and strip inner HTML
+                                    }, $post->content);
+
+                                    // Now remove all remaining HTML tags from the content
+                                    $cleanedContent = strip_tags($cleanedContent);
+
+                                    // Get the first 150 characters from the cleaned content
+                                    $shortenedContent = mb_substr($cleanedContent, 0, 150);
+
+                                    // Display the shortened content
+                                    echo $shortenedContent . '...';
+                                    ?>
                                 </p>
+
+
+
                             </div>
                             <div class="card-footer text-muted">
                                 <small>Posted on <?= date('F j, Y', strtotime($post->created_at)) ?></small>
