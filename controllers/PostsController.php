@@ -6,6 +6,7 @@ use app\models\Categories;
 use app\models\Posts;
 use app\models\PostsSearch;
 use Yii;
+use yii\db\Exception;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -13,6 +14,7 @@ use yii\filters\VerbFilter;
 use yii\helpers\Html;
 use HTMLPurifier;
 use HTMLPurifier_Config;
+use yii\web\Response;
 
 /**
  * PostsController implements the CRUD actions for Posts model.
@@ -92,15 +94,49 @@ class PostsController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModelWithViewCount($id); // Fetch model and handle view count
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
         ]);
     }
 
     /**
+     * Finds the Post model and increments the view count if needed.
+     *
+     * @param integer $id
+     * @return Posts the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModelWithViewCount(int $id): Posts
+    {
+        $model = Posts::findOne($id);
+        if (!$model) {
+            throw new NotFoundHttpException('The requested post does not exist.');
+        }
+
+        $session = Yii::$app->session;
+        if (!$session->isActive) {
+            $session->open();
+        }
+
+        $viewedPosts = $session->get('viewedPosts', []);
+
+        if (!in_array($id, $viewedPosts, true)) {
+            $viewedPosts[] = $id;
+            $session->set('viewedPosts', $viewedPosts);
+
+            $model->updateCounters(['view_count' => 1]);
+        }
+
+        return $model;
+    }
+
+
+    /**
      * Creates a new Posts model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
+     * @return string|Response
+     * @throws Exception
      */
     public function actionCreate()
     {
@@ -135,7 +171,7 @@ class PostsController extends Controller
      * Updates an existing Posts model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
-     * @return string|\yii\web\Response
+     * @return string|Response
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUpdate($id)
@@ -165,7 +201,7 @@ class PostsController extends Controller
      * Deletes an existing Posts model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
-     * @return \yii\web\Response
+     * @return Response
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($id)
