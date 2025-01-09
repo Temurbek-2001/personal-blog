@@ -10,6 +10,7 @@ use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
 use yii\bootstrap5\Nav;
 use yii\bootstrap5\NavBar;
+use yii\helpers\Url;
 
 AppAsset::register($this);
 
@@ -32,11 +33,42 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 
 <header id="header">
     <?php
+
     NavBar::begin([
         'brandLabel' => Yii::$app->name,
         'brandUrl' => Yii::$app->homeUrl,
         'options' => ['class' => 'navbar-expand-md navbar-dark bg-dark fixed-top']
     ]);
+
+    // Define URLs
+    $loginUrl = Url::to(['/site/login']);
+    $signupUrl = Url::to(['/site/signup']);
+
+    // Register custom JavaScript for long press functionality
+    $this->registerJs(<<<JS
+    let timer;
+    const loginUrl = '$loginUrl';
+    const signupUrl = '$signupUrl';
+
+    document.getElementById('login-signup-link').addEventListener('mousedown', function() {
+        timer = setTimeout(function() {
+            // Redirect to the signup page after 3 seconds
+            window.location.href = signupUrl;
+        }, 3000);
+    });
+
+    document.getElementById('login-signup-link').addEventListener('mouseup', function() {
+        clearTimeout(timer); // Clear timer if the mouse is released before 3 seconds
+    });
+
+    document.getElementById('login-signup-link').addEventListener('click', function(e) {
+        clearTimeout(timer);
+        // Redirect to the login page for a normal click
+        window.location.href = loginUrl;
+    });
+    JS
+    );
+
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav'],
         'items' => [
@@ -44,7 +76,10 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             ['label' => 'About', 'url' => ['/site/about']],
             ['label' => 'Create', 'url' => ['/posts/create']],
             Yii::$app->user->isGuest
-                ? ['label' => 'Login', 'url' => ['/site/login']]
+                ? Html::a('Login', '#', [
+                'id' => 'login-signup-link',
+                'class' => 'nav-link'
+            ])
                 : '<li class="nav-item">'
                 . Html::beginForm(['/site/logout'])
                 . Html::submitButton(
@@ -55,9 +90,11 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                 . '</li>'
         ]
     ]);
+
     NavBar::end();
     ?>
 </header>
+
 
 <main id="main" class="flex-shrink-0" role="main">
     <div class="container">
