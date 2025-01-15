@@ -63,8 +63,25 @@ $this->params['breadcrumbs'][] = $this->title;
                 'class' => ActionColumn::class,
                 'urlCreator' => function ($action, Posts $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
-                }
+                },
+                'buttons' => [
+                    'view' => function ($url, $model, $key) {
+                        return Html::a('View', $url, ['class' => 'btn btn-primary']);
+                    },
+                    'update' => function ($url, $model, $key) {
+                        return Html::a('Edit', $url, ['class' => 'btn btn-warning']);
+                    },
+                    'delete' => function ($url, $model, $key) {
+                        return Html::a('Delete', $url, [
+                            'class' => 'btn btn-danger',
+                            'data-confirm' => 'Are you sure you want to delete this item?',
+                            'data-method' => 'post',
+                        ]);
+                    },
+                ],
+                'template' => '{view} {update} {delete}', // Specify which buttons to show and in what order
             ],
+
         ],
     ]); ?>
 

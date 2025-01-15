@@ -1,7 +1,11 @@
 <?php
 
+use app\models\Posts;
 use yii\helpers\Html;
 
+/**
+ * @var Posts $model
+ */
 ?>
 <div class="posts-view">
     <article>
