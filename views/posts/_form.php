@@ -39,7 +39,9 @@ $this->registerJs("
 
 <div class="posts-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+        'options' => ['id' => 'posts-form-id'],
+    ]); ?>
 
     <!-- Dropdown for Category -->
     <?= $form->field($model, 'category_id')
