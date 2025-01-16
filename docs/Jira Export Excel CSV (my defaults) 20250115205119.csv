@@ -1,0 +1,19 @@
+﻿Issue Type,Issue key,Issue id,Summary,Assignee,Assignee Id,Status,Created,Updated,Priority,Sprint
+Task,SCRUM-21,10020,Modify controller and view to implement view-count,Temur Mirzaliev,62adb83dddc560006e8eb5a9,Done,23/Dec/24 3:52 PM,25/Dec/24 12:51 PM,Medium,SCRUM Sprint 3
+Task,SCRUM-20,10019,Create View Count Functionality,Temur Mirzaliev,62adb83dddc560006e8eb5a9,Done,23/Dec/24 3:50 PM,25/Dec/24 12:52 PM,Medium,SCRUM Sprint 3
+Task,SCRUM-18,10017,Fix bugs and polish the UI.,Temur Mirzaliev,62adb83dddc560006e8eb5a9,Done,18/Dec/24 10:25 PM,15/Jan/25 8:48 PM,Medium,SCRUM Sprint 3
+Task,SCRUM-17,10016,Perform manual testing for CRUD.,Temur Mirzaliev,62adb83dddc560006e8eb5a9,Done,18/Dec/24 10:25 PM,15/Jan/25 8:48 PM,Medium,SCRUM Sprint 3
+Task,SCRUM-16,10015,Implement a single post detail page.,Temur Mirzaliev,62adb83dddc560006e8eb5a9,Done,18/Dec/24 10:25 PM,25/Dec/24 12:51 PM,Medium,SCRUM Sprint 2
+Task,SCRUM-15,10014,Style the page using basic HTML and CSS.,Temur Mirzaliev,62adb83dddc560006e8eb5a9,Done,18/Dec/24 10:24 PM,24/Dec/24 8:20 PM,Medium,SCRUM Sprint 2
+Task,SCRUM-14,10013,"Create a ""Posts"" page displaying all posts.",Temur Mirzaliev,62adb83dddc560006e8eb5a9,Done,18/Dec/24 10:24 PM,24/Dec/24 8:20 PM,Medium,SCRUM Sprint 2
+Task,SCRUM-13,10012,Implement admin-only access using Yii’s RBAC (Role-Based Access Control).,Temur Mirzaliev,62adb83dddc560006e8eb5a9,Done,18/Dec/24 10:23 PM,23/Dec/24 6:03 PM,Medium,SCRUM Sprint 2
+Task,SCRUM-12,10011,"Generate Yii models, controllers, and views for CRUD operations",Temur Mirzaliev,62adb83dddc560006e8eb5a9,Done,18/Dec/24 10:23 PM,19/Dec/24 9:31 PM,Medium,SCRUM Sprint 1
+Task,SCRUM-11,10010,"Create the ""Posts"" database table",Temur Mirzaliev,62adb83dddc560006e8eb5a9,Done,18/Dec/24 10:23 PM,19/Dec/24 9:13 PM,Medium,SCRUM Sprint 1
+Task,SCRUM-10,10009,"Create a basic folder structure (models, views, controllers)",Temur Mirzaliev,62adb83dddc560006e8eb5a9,Done,18/Dec/24 10:22 PM,19/Dec/24 9:13 PM,Medium,SCRUM Sprint 1
+Task,SCRUM-9,10008,Set up the database connection,Temur Mirzaliev,62adb83dddc560006e8eb5a9,Done,18/Dec/24 10:22 PM,19/Dec/24 9:11 PM,Medium,SCRUM Sprint 1
+Task,SCRUM-8,10007,Install Yii framework.,Temur Mirzaliev,62adb83dddc560006e8eb5a9,Done,18/Dec/24 10:21 PM,18/Dec/24 10:30 PM,Medium,SCRUM Sprint 1
+Story,SCRUM-6,10005,Testing and Finalizing,Temur Mirzaliev,62adb83dddc560006e8eb5a9,Done,18/Dec/24 10:16 PM,15/Jan/25 8:48 PM,Medium,SCRUM Sprint 3
+Story,SCRUM-5,10004,Create Frontend for Viewing Blog Posts,Temur Mirzaliev,62adb83dddc560006e8eb5a9,Done,18/Dec/24 10:15 PM,25/Dec/24 12:51 PM,Medium,SCRUM Sprint 2
+Story,SCRUM-4,10003,Design Admin CRUD for Blog Posts,Temur Mirzaliev,62adb83dddc560006e8eb5a9,Done,18/Dec/24 10:13 PM,23/Dec/24 12:01 PM,Medium,SCRUM Sprint 1
+Story,SCRUM-2,10001,Clear Project Structure in Yii,Temur Mirzaliev,62adb83dddc560006e8eb5a9,Done,18/Dec/24 10:06 PM,19/Dec/24 9:13 PM,Medium,SCRUM Sprint 1
+Epic,SCRUM-1,10000,We need to create a simple personal blog website.,Temur Mirzaliev,62adb83dddc560006e8eb5a9,Done,18/Dec/24 8:43 PM,15/Jan/25 8:49 PM,Medium,
